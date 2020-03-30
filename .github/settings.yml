@@ -1,0 +1,6 @@
+_extends: .github
+repository:
+  name: remark-inject-badges
+  description: remark plugin to inject badges into form8ion conventional zones
+  homepage: 'https://npm.im/@form8ion/remark-inject-badges'
+  private: false
