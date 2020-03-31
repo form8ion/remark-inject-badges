@@ -36,8 +36,44 @@ $ npm install @form8ion/remark-inject-badges --save-dev
 
 ### Example
 
+#### Import
+
 ```javascript
-import remarkInjectBadges from '@form8ion/remark-inject-badges';
+import fs from 'fs';
+import remark from 'remark';
+import injectBadges from '@form8ion/remark-inject-badges';
+```
+
+#### Execute
+
+```javascript
+remark()
+  .use(
+    injectBadges,
+    {
+      contribution: {
+        text: 'alt-text for the badge image',
+        link: 'url for badge link',
+        img: 'badge image url'
+      }
+    }
+  )
+  .process(
+    `# project-name
+
+<!--status-badges start -->
+<!--status-badges end -->
+
+<!--consumer-badges start -->
+<!--consumer-badges end -->
+
+<!--contribution-badges start -->
+<!--contribution-badges end -->
+`,
+    (err, file) => {
+      fs.writeFileSync(`${process.cwd()}/README.md`, file);
+    }
+  );
 ```
 
 ## Contributing
