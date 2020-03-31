@@ -3,6 +3,8 @@ import zone from '../thirdparty-wrappers/mdast-zone';
 
 export default function (badges) {
   return function transformer(node) {
-    zone(node, 'contribution-badges', getZoneMutator(badges.contribution));
+    Object.entries(badges).forEach(([groupName, group]) => {
+      zone(node, `${groupName}-badges`, getZoneMutator(group));
+    });
   };
 }
