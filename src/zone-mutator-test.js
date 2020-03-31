@@ -6,29 +6,37 @@ import mutateZone from './zone-mutator';
 
 suite('zone mutator', () => {
   let sandbox;
+  const start = any.simpleObject();
+  const end = any.simpleObject();
+  const detailsOfBadges = any.simpleObject();
+  const detailsOfBadgesEntries = Object.entries(detailsOfBadges);
+  const linkReferences = detailsOfBadgesEntries.map(() => any.simpleObject());
 
   setup(() => {
     sandbox = sinon.createSandbox();
 
     sandbox.stub(badgeToLinkReferenceMapper, 'default');
+
+    detailsOfBadgesEntries.forEach((entry, index) => {
+      badgeToLinkReferenceMapper.default.withArgs(entry).returns(linkReferences[index]);
+    });
   });
 
   teardown(() => sandbox.restore());
 
   test('that the badges are added to the empty zone', () => {
-    const start = any.simpleObject();
-    const end = any.simpleObject();
-    const nodes = any.listOf(any.simpleObject);
-    const detailsOfBadges = any.simpleObject();
-    const detailsOfBadgesEntries = Object.entries(detailsOfBadges);
-    const linkReferences = detailsOfBadgesEntries.map(() => any.simpleObject());
-    detailsOfBadgesEntries.forEach((entry, index) => {
-      badgeToLinkReferenceMapper.default.withArgs(entry).returns(linkReferences[index]);
-    });
+    assert.deepEqual(
+      mutateZone(detailsOfBadges)(start, [], end),
+      [start, {type: 'paragraph', children: linkReferences}, end]
+    );
+  });
+
+  test('that the badges are appended to the existing list', () => {
+    const existingLinkReferences = detailsOfBadgesEntries.map(() => any.simpleObject());
 
     assert.deepEqual(
-      mutateZone(detailsOfBadges)(start, nodes, end),
-      [start, {type: 'paragraph', children: linkReferences}, end]
+      mutateZone(detailsOfBadges)(start, [{type: 'paragraph', children: existingLinkReferences}], end),
+      [start, {type: 'paragraph', children: [...existingLinkReferences, ...linkReferences]}, end]
     );
   });
 });
