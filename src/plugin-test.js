@@ -8,6 +8,7 @@ import plugin from './plugin';
 
 suite('plugin', () => {
   let sandbox;
+  const node = any.simpleObject();
 
   setup(() => {
     sandbox = sinon.createSandbox();
@@ -19,7 +20,6 @@ suite('plugin', () => {
   teardown(() => sandbox.restore());
 
   test('that the badges are injected into the appropriate zones', () => {
-    const node = any.simpleObject();
     const badgeGroupNames = any.listOf(any.word);
     const badgeGroups = badgeGroupNames.map(() => any.simpleObject());
     const zoneMutators = badgeGroupNames.map(() => () => undefined);
@@ -34,5 +34,11 @@ suite('plugin', () => {
     zip(badgeGroupNames, zoneMutators).forEach(([groupName, mutator]) => {
       assert.calledWith(zone.default, node, `${groupName}-badges`, mutator);
     });
+  });
+
+  test('that no injection happens if no badges are provided', () => {
+    const transformer = plugin();
+
+    transformer(node);
   });
 });
