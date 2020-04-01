@@ -4,11 +4,11 @@ import assertIsValidMdastNode from 'mdast-util-assert';
 import map from './badge-to-link-reference-mapper';
 
 suite('badge-details to link-reference mapper', () => {
-  test('that that a link reference is produced from the badge details', () => {
-    const name = any.word();
-    const altText = any.sentence();
+  const name = any.word();
+  const altText = any.sentence();
 
-    const linkReference = map([name, {text: altText}]);
+  test('that that a link reference is produced from the badge details', () => {
+    const linkReference = map([name, {text: altText, link: any.url()}]);
 
     assertIsValidMdastNode(linkReference);
     assert.deepEqual(
@@ -20,6 +20,16 @@ suite('badge-details to link-reference mapper', () => {
         referenceType: 'full',
         children: [{type: 'imageReference', label: `${name}-badge`, identifier: `${name}-badge`, alt: altText}]
       }
+    );
+  });
+
+  test('that an image reference is produced if no link is provided in the badge details', () => {
+    const imageReference = map([name, {text: altText}]);
+
+    assertIsValidMdastNode(imageReference);
+    assert.deepEqual(
+      imageReference,
+      {type: 'imageReference', label: `${name}-badge`, identifier: `${name}-badge`, alt: altText}
     );
   });
 });
