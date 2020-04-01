@@ -5,16 +5,18 @@ function zoneAlreadyContainsListOfBadges(node) {
 }
 
 export default function (detailsOfBadges) {
-  const linkReferences = Object.entries(detailsOfBadges).map(mapBadgeDetailsToLinkReference);
+  const linkReferences = Object.entries(detailsOfBadges)
+    .map(mapBadgeDetailsToLinkReference)
+    .reduce((acc, reference) => acc.concat(reference, {type: 'text', value: '\n'}), [])
+    .slice(0, -1);
 
   return (start, nodes, end) => {
     const node = nodes[0];
-    if (zoneAlreadyContainsListOfBadges(node)) node.children.concat(linkReferences);
 
     return [
       start,
       zoneAlreadyContainsListOfBadges(node)
-        ? {...node, children: [...node.children, ...linkReferences]}
+        ? {...node, children: [...node.children, {type: 'text', value: '\n'}, ...linkReferences]}
         : {type: 'paragraph', children: linkReferences},
       end
     ];
