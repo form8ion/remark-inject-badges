@@ -1,1 +1,1 @@
-{"extends":["github>form8ion/renovate-config"]}
+{"extends":["github>form8ion/renovate-config:js-package"]}
