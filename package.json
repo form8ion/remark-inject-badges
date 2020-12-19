@@ -26,7 +26,6 @@
     "generate:md": "remark . --output",
     "pregenerate:md": "npm run build",
     "lint:sensitive": "ban",
-    "lint:travis": "travis-lint .travis.yml",
     "clean": "rimraf ./lib",
     "prebuild": "run-s clean",
     "build": "npm-run-all --print-label --parallel build:*",
@@ -64,8 +63,7 @@
     "rimraf": "3.0.2",
     "rollup": "2.35.1",
     "rollup-plugin-auto-external": "2.0.0",
-    "sinon": "9.2.2",
-    "travis-lint": "1.0.0"
+    "sinon": "9.2.2"
   },
   "dependencies": {
     "mdast-zone": "^4.0.0"
