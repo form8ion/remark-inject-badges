@@ -46,7 +46,7 @@
     "@form8ion/remark-lint-preset": "1.0.12",
     "@travi/any": "2.0.16",
     "ban-sensitive-files": "1.9.15",
-    "chai": "4.3.1",
+    "chai": "4.3.3",
     "codecov": "3.8.1",
     "cz-conventional-changelog": "3.3.0",
     "husky": "5.1.3",
