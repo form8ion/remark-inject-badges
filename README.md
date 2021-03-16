@@ -14,6 +14,8 @@ to inject badges into form8ion conventional [zones](https://github.com/syntax-tr
 * [Usage](#usage)
   * [Installation](#installation)
   * [Example](#example)
+    * [Import](#import)
+    * [Execute](#execute)
 * [Contributing](#contributing)
   * [Dependencies](#dependencies)
   * [Verification](#verification)
@@ -71,7 +73,7 @@ remark()
 <!--contribution-badges end -->
 `,
     (err, file) => {
-      fs.writeFileSync(`${process.cwd()}/README.md`, file);
+      fs.writeFileSync(`${process.cwd()}/README.md`, file.contents);
     }
   );
 ```
