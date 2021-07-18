@@ -66,6 +66,6 @@
     "sinon": "11.1.1"
   },
   "dependencies": {
-    "mdast-zone": "^4.0.0"
+    "mdast-zone": "^5.0.0"
   }
 }
