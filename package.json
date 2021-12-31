@@ -39,7 +39,7 @@
     "prepare": "husky install"
   },
   "devDependencies": {
-    "@babel/register": "7.16.5",
+    "@babel/register": "7.16.7",
     "@form8ion/babel-preset": "1.6.73",
     "@form8ion/commitlint-config": "1.0.25",
     "@form8ion/eslint-config": "2.0.2",
