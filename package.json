@@ -50,7 +50,7 @@
     "chai": "4.3.6",
     "codecov": "3.8.3",
     "cz-conventional-changelog": "3.3.0",
-    "husky": "8.0.0",
+    "husky": "8.0.1",
     "lockfile-lint": "4.7.4",
     "lodash.zip": "4.2.0",
     "mdast-util-assert": "3.0.0",
