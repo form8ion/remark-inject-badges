@@ -3,6 +3,9 @@
   "description": "remark plugin to inject badges into form8ion conventional zones",
   "license": "MIT",
   "version": "0.0.0-semantically-released",
+  "engines": {
+    "node": "^14.15 || >=16"
+  },
   "files": [
     "example.js",
     "lib/"
@@ -11,8 +14,12 @@
     "access": "public"
   },
   "runkitExampleFilename": "./example.js",
-  "main": "lib/index.cjs.js",
-  "module": "lib/index.es.js",
+  "main": "./lib/index.cjs.js",
+  "module": "./lib/index.es.js",
+  "exports": {
+    "require": "./lib/index.cjs.js",
+    "import": "./lib/index.es.js"
+  },
   "sideEffects": false,
   "repository": "form8ion/remark-inject-badges",
   "bugs": "https://github.com/form8ion/remark-inject-badges/issues",
@@ -42,7 +49,8 @@
     "test:integration:debug": "DEBUG=test run-s test:integration",
     "test:integration:wip": "run-s 'test:integration:base -- --profile wip'",
     "test:integration:wip:debug": "DEBUG=test run-s 'test:integration:wip'",
-    "test:integration:focus": "run-s 'test:integration:base -- --profile focus'"
+    "test:integration:focus": "run-s 'test:integration:base -- --profile focus'",
+    "lint:engines": "ls-engines"
   },
   "devDependencies": {
     "@babel/register": "7.17.7",
@@ -63,6 +71,7 @@
     "husky": "8.0.1",
     "lockfile-lint": "4.7.4",
     "lodash.zip": "4.2.0",
+    "ls-engines": "0.7.0",
     "mdast-util-assert": "3.0.0",
     "mocha": "10.0.0",
     "mock-fs": "5.1.2",
