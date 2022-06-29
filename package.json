@@ -85,6 +85,6 @@
     "sinon": "14.0.0"
   },
   "dependencies": {
-    "mdast-zone": "^5.0.0"
+    "mdast-zone": "^4.0.0"
   }
 }
