@@ -55,9 +55,11 @@ remark()
     injectBadges,
     {
       contribution: {
-        text: 'alt-text for the badge image',
-        link: 'url for badge link',
-        img: 'badge image url'
+        badgeKey: {
+          text: 'alt-text for the badge image',
+          link: 'url for badge link',
+          img: 'badge image url'
+        }
       }
     }
   )
