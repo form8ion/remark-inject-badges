@@ -72,7 +72,7 @@
     "husky": "8.0.2",
     "lockfile-lint": "4.9.6",
     "lodash.zip": "4.2.0",
-    "ls-engines": "0.7.0",
+    "ls-engines": "0.8.0",
     "mdast-util-assert": "3.0.0",
     "mdast-util-from-markdown": "0.8.5",
     "mocha": "10.2.0",
