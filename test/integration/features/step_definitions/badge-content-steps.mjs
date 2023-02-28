@@ -135,18 +135,18 @@ Then('the additional badges were injected', async function () {
 Then('no additional badges were injected', async function () {
   const readmeTree = parse(this.resultingContent);
 
-  // this.badgeGroupNames.forEach(groupName => {
-  //   zone(readmeTree, `${groupName}-badges`, (start, nodes, end) => {
-  //     const badgesInDocument = nodes[0].children.filter(node => 'linkReference' === node.type);
-  //     const providedBadges = Object.entries(this.badges[groupName]);
-  //
-  //     assert.equal(badgesInDocument.length, providedBadges.length);
-  //     badgesInDocument.forEach((node, index) => {
-  //       const badge = providedBadges[index];
-  //       assert.equal(node.identifier, `${badge[0]}-link`);
-  //     });
-  //   });
-  // });
+  this.badgeGroupNames.forEach(groupName => {
+    zone(readmeTree, `${groupName}-badges`, (start, nodes, end) => {
+      const badgesInDocument = nodes[0].children.filter(node => 'linkReference' === node.type);
+      const providedBadges = Object.entries(this.badges[groupName]);
+
+      assert.equal(badgesInDocument.length, providedBadges.length);
+      badgesInDocument.forEach((node, index) => {
+        const badge = providedBadges[index];
+        assert.equal(node.identifier, `${badge[0]}-link`);
+      });
+    });
+  });
 
   assertBadgeDefinitionsExistExactlyOnceFor(readmeTree, this.badgeGroupNames, this.badges);
 });
