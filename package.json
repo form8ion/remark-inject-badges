@@ -54,7 +54,7 @@
     "lint:engines": "ls-engines"
   },
   "devDependencies": {
-    "@babel/register": "7.21.0",
+    "@babel/register": "7.22.5",
     "@cucumber/cucumber": "9.1.2",
     "@form8ion/babel-preset": "1.6.104",
     "@form8ion/commitlint-config": "1.0.51",
