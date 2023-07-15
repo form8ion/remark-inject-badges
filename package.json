@@ -6,27 +6,21 @@
   "engines": {
     "node": "^14.15 || >=16"
   },
-  "files": [
-    "example.js",
-    "lib/"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
+  "author": "Matt Travi <npm@travi.org> (https://matt.travi.org/)",
+  "repository": "form8ion/remark-inject-badges",
+  "bugs": "https://github.com/form8ion/remark-inject-badges/issues",
+  "homepage": "https://npm.im/@form8ion/remark-inject-badges",
   "runkitExampleFilename": "./example.js",
-  "main": "./lib/index.js",
-  "module": "./lib/index.mjs",
   "exports": {
     "require": "./lib/index.js",
     "import": "./lib/index.mjs"
   },
+  "main": "./lib/index.js",
+  "module": "./lib/index.mjs",
   "sideEffects": false,
-  "repository": "form8ion/remark-inject-badges",
-  "bugs": "https://github.com/form8ion/remark-inject-badges/issues",
-  "homepage": "https://npm.im/@form8ion/remark-inject-badges",
-  "author": "Matt Travi <npm@travi.org> (https://matt.travi.org/)",
   "scripts": {
-    "test": "npm-run-all --print-label build --parallel lint:* --parallel test:*",
+    "pretest": "run-s build",
+    "test": "npm-run-all --print-label --parallel lint:* --parallel test:*",
     "lint:lockfile": "lockfile-lint --path package-lock.json --type npm --validate-https --allowed-hosts npm",
     "lint:js": "eslint . --cache",
     "lint:md": "remark . --frail",
@@ -52,6 +46,16 @@
     "test:integration:wip:debug": "DEBUG=test run-s 'test:integration:wip'",
     "test:integration:focus": "run-s 'test:integration:base -- --profile focus'",
     "lint:engines": "ls-engines"
+  },
+  "files": [
+    "example.js",
+    "lib/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "mdast-zone": "^4.0.0"
   },
   "devDependencies": {
     "@babel/register": "7.22.5",
@@ -86,8 +90,5 @@
     "rollup-plugin-auto-external": "2.0.0",
     "sinon": "15.2.0",
     "unist-util-find-all-after": "3.0.2"
-  },
-  "dependencies": {
-    "mdast-zone": "^4.0.0"
   }
 }
