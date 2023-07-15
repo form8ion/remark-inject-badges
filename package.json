@@ -52,6 +52,17 @@
     "lib/"
   ],
   "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "dependencies": {
+    "mdast-zone": "^4.0.0"
+  },
+  "files": [
+    "example.js",
+    "lib/"
+  ],
+  "publishConfig": {
     "access": "public"
   },
   "dependencies": {
