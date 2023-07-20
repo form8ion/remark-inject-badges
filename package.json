@@ -59,27 +59,6 @@
   "dependencies": {
     "mdast-zone": "^4.0.0"
   },
-  "files": [
-    "example.js",
-    "lib/"
-  ],
-  "publishConfig": {
-    "access": "public",
-    "provenance": true
-  },
-  "dependencies": {
-    "mdast-zone": "^4.0.0"
-  },
-  "files": [
-    "example.js",
-    "lib/"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
-  "dependencies": {
-    "mdast-zone": "^4.0.0"
-  },
   "devDependencies": {
     "@babel/register": "7.22.5",
     "@cucumber/cucumber": "9.3.0",
