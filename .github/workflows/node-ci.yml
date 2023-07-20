@@ -22,7 +22,6 @@ jobs:
           - 16.0.0
           - 16
           - 18
-          - 19
           - 20
     steps:
       - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3
