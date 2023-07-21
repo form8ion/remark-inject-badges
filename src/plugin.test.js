@@ -1,4 +1,4 @@
-import zone from 'mdast-zone';
+import {zone} from 'mdast-zone';
 
 import {afterEach, beforeEach, vi, describe, it, expect} from 'vitest';
 import any from '@travi/any';

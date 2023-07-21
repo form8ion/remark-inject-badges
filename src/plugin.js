@@ -1,4 +1,4 @@
-import zone from 'mdast-zone';
+import {zone} from 'mdast-zone';
 
 import getZoneMutator from './zone-mutator.js';
 

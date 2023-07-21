@@ -1,7 +1,7 @@
-import {EOL} from 'os';
+import {EOL} from 'node:os';
 import findAllAfter from 'unist-util-find-all-after';
-import parse from 'mdast-util-from-markdown';
-import zone from 'mdast-zone';
+import {fromMarkdown as parse} from 'mdast-util-from-markdown';
+import {zone} from 'mdast-zone';
 import {assert} from 'chai';
 
 import {Given, Then} from '@cucumber/cucumber';
