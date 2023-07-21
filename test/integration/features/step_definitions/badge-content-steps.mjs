@@ -1,5 +1,5 @@
 import {EOL} from 'node:os';
-import findAllAfter from 'unist-util-find-all-after';
+import {findAllAfter} from 'unist-util-find-all-after';
 import {fromMarkdown as parse} from 'mdast-util-from-markdown';
 import {zone} from 'mdast-zone';
 import {assert} from 'chai';
