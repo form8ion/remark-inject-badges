@@ -57,7 +57,7 @@
     "provenance": true
   },
   "dependencies": {
-    "mdast-zone": "^4.0.0"
+    "mdast-zone": "^6.0.0"
   },
   "devDependencies": {
     "@babel/register": "7.22.5",
