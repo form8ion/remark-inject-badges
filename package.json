@@ -3,6 +3,7 @@
   "description": "remark plugin to inject badges into form8ion conventional zones",
   "license": "MIT",
   "version": "0.0.0-semantically-released",
+  "type": "module",
   "engines": {
     "node": "^16.14 || >=18"
   },
@@ -11,12 +12,8 @@
   "bugs": "https://github.com/form8ion/remark-inject-badges/issues",
   "homepage": "https://npm.im/@form8ion/remark-inject-badges",
   "runkitExampleFilename": "./example.js",
-  "exports": {
-    "require": "./lib/index.js",
-    "import": "./lib/index.mjs"
-  },
+  "exports": "./lib/index.js",
   "main": "./lib/index.js",
-  "module": "./lib/index.mjs",
   "sideEffects": false,
   "scripts": {
     "pretest": "run-s build",
