@@ -67,7 +67,7 @@ Given('the provided badges already exist in the document', async function () {
 ${this.badgeGroupNames.map(groupName => `
 <!--${groupName}-badges start -->
 ${Object.entries(this.badges[groupName])
-  .map(([badgeKey, badge]) => `[![${badge.text}][${badgeKey}-badge]][${badgeKey}-link]
+    .map(([badgeKey, badge]) => `[![${badge.text}][${badgeKey}-badge]][${badgeKey}-link]
 `)}
 <!--${groupName}-badges end -->
 `).join(EOL)}
@@ -85,7 +85,7 @@ Then('no badges were injected', async function () {
   const readmeTree = parse(this.resultingContent);
 
   this.badgeGroupNames.forEach(groupName => {
-    zone(readmeTree, `${groupName}-badges`, (start, nodes, end) => {
+    zone(readmeTree, `${groupName}-badges`, (start, nodes) => {
       assert.equal(nodes.length, 0, `There should be no badges in the ${groupName} zone`);
     });
   });
@@ -97,13 +97,13 @@ Then('the provided badges were injected', async function () {
   const readmeTree = parse(this.resultingContent);
 
   this.badgeGroupNames.forEach(groupName => {
-    zone(readmeTree, `${groupName}-badges`, (start, nodes, end) => {
+    zone(readmeTree, `${groupName}-badges`, (start, nodes) => {
       nodes[0].children
         .filter(node => 'linkReference' === node.type)
         .forEach((node, index) => {
           const badgeKey = Object.keys(this.badges[groupName])[index];
           assert.equal(node.identifier, `${badgeKey}-link`);
-        })
+        });
     });
   });
 
@@ -114,7 +114,7 @@ Then('the additional badges were injected', async function () {
   const readmeTree = parse(this.resultingContent);
 
   this.badgeGroupNames.forEach(groupName => {
-    zone(readmeTree, `${groupName}-badges`, (start, nodes, end) => {
+    zone(readmeTree, `${groupName}-badges`, (start, nodes) => {
       const badgesInDocument = nodes[0].children.filter(node => 'linkReference' === node.type);
       const existingBadges = Object.keys(this.existingBadges[groupName]);
       const providedBadges = Object.keys(this.badges[groupName]);
@@ -136,7 +136,7 @@ Then('no additional badges were injected', async function () {
   const readmeTree = parse(this.resultingContent);
 
   this.badgeGroupNames.forEach(groupName => {
-    zone(readmeTree, `${groupName}-badges`, (start, nodes, end) => {
+    zone(readmeTree, `${groupName}-badges`, (start, nodes) => {
       const badgesInDocument = nodes[0].children.filter(node => 'linkReference' === node.type);
       const providedBadges = Object.entries(this.badges[groupName]);
 
