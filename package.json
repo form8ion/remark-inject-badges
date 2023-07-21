@@ -93,7 +93,7 @@
     "rollup": "2.79.1",
     "rollup-plugin-auto-external": "2.0.0",
     "sinon": "15.2.0",
-    "unist-util-find-all-after": "3.0.2",
+    "unist-util-find-all-after": "5.0.0",
     "vitest": "0.33.0"
   }
 }
