@@ -1,4 +1,4 @@
-import mapBadgeDetailsToLinkReference from './badge-to-link-reference-mapper';
+import mapBadgeDetailsToLinkReference from './badge-to-link-reference-mapper.js';
 
 function zoneAlreadyContainsListOfBadges(node) {
   return node && 'paragraph' === node.type;

@@ -1,15 +1,15 @@
-import zone from 'mdast-zone';
+import {zone} from 'mdast-zone';
 
 import {afterEach, beforeEach, vi, describe, it, expect} from 'vitest';
 import any from '@travi/any';
 import zip from 'lodash.zip';
 import {when} from 'jest-when';
 
-import mutateZone from './zone-mutator';
-import plugin from './plugin';
+import mutateZone from './zone-mutator.js';
+import plugin from './plugin.js';
 
 vi.mock('mdast-zone');
-vi.mock('./zone-mutator');
+vi.mock('./zone-mutator.js');
 
 describe('plugin', () => {
   let node;

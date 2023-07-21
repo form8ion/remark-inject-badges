@@ -1,8 +1,8 @@
 import {describe, expect, it} from 'vitest';
 import any from '@travi/any';
-import assertIsValidMdastNode from 'mdast-util-assert';
+import {assert as assertIsValidMdastNode} from 'mdast-util-assert';
 
-import map from './badge-to-link-reference-mapper';
+import map from './badge-to-link-reference-mapper.js';
 
 describe('badge-details to link-reference mapper', () => {
   const name = any.word();
