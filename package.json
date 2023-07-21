@@ -34,7 +34,7 @@
     "watch": "run-s 'build:js -- --watch'",
     "prepack": "run-s build",
     "test:unit": "cross-env NODE_ENV=test c8 run-s test:unit:base",
-    "test:unit:base": "DEBUG=any mocha 'src/**/*-test.js'",
+    "test:unit:base": "DEBUG=any vitest run",
     "lint:peer": "npm ls >/dev/null",
     "prepare": "husky install",
     "lint:gherkin": "gherkin-lint",
@@ -76,6 +76,7 @@
     "cz-conventional-changelog": "3.3.0",
     "gherkin-lint": "4.2.2",
     "husky": "8.0.3",
+    "jest-when": "3.5.2",
     "lockfile-lint": "4.10.6",
     "lodash.zip": "4.2.0",
     "ls-engines": "0.9.0",
@@ -92,6 +93,7 @@
     "rollup": "2.79.1",
     "rollup-plugin-auto-external": "2.0.0",
     "sinon": "15.2.0",
-    "unist-util-find-all-after": "3.0.2"
+    "unist-util-find-all-after": "3.0.2",
+    "vitest": "0.33.0"
   }
 }

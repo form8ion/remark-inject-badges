@@ -1,5 +1,6 @@
+import zone from 'mdast-zone';
+
 import getZoneMutator from './zone-mutator';
-import zone from '../thirdparty-wrappers/mdast-zone';
 
 export default function (badges) {
   return function transformer(node) {

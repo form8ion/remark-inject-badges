@@ -1,85 +1,86 @@
-import sinon from 'sinon';
-import {assert} from 'chai';
-import zip from 'lodash.zip';
+import zone from 'mdast-zone';
+
+import {afterEach, beforeEach, vi, describe, it, expect} from 'vitest';
 import any from '@travi/any';
-import * as zone from '../thirdparty-wrappers/mdast-zone';
-import * as zoneMutator from './zone-mutator';
+import zip from 'lodash.zip';
+import {when} from 'jest-when';
+
+import mutateZone from './zone-mutator';
 import plugin from './plugin';
 
-suite('plugin', () => {
-  let sandbox, node;
+vi.mock('mdast-zone');
+vi.mock('./zone-mutator');
 
-  setup(() => {
-    sandbox = sinon.createSandbox();
+describe('plugin', () => {
+  let node;
+  const badgeGroupNames = any.listOf(any.word);
 
-    sandbox.stub(zone, 'default');
-    sandbox.stub(zoneMutator, 'default');
-
+  beforeEach(() => {
     node = {...any.simpleObject(), children: []};
   });
 
-  teardown(() => sandbox.restore());
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
 
-  test('that the badges are injected into the appropriate zones', () => {
-    const badgeGroupNames = any.listOf(any.word);
+  it('should inject the badges into the appropriate zones', () => {
     const badgeGroups = badgeGroupNames.map(() => any.objectWithKeys(
       any.listOf(any.word),
       {factory: () => ({link: any.url(), img: any.url()})}
     ));
-    const zoneMutators = badgeGroupNames.map(() => () => undefined);
     const transformer = plugin(Object.fromEntries(zip(badgeGroupNames, badgeGroups)));
+    const zoneMutators = badgeGroupNames.map(() => () => undefined);
     zip(badgeGroups, zoneMutators).forEach(([group, mutator]) => {
-      zoneMutator.default.withArgs(group).returns(mutator);
+      when(mutateZone).calledWith(group).mockReturnValue(mutator);
     });
     const flattenedBadgeDetails = Object.values(badgeGroups).reduce((acc, badgeGroup) => ({...acc, ...badgeGroup}), {});
 
     transformer(node);
 
-    assert.callCount(zoneMutator.default, badgeGroupNames.length);
+    expect(mutateZone).toHaveBeenCalledTimes(badgeGroupNames.length);
     zip(badgeGroupNames, zoneMutators).forEach(([groupName, mutator]) => {
-      assert.calledWith(zone.default, node, `${groupName}-badges`, mutator);
+      expect(zone).toHaveBeenCalledWith(node, `${groupName}-badges`, mutator);
     });
     Object.entries(flattenedBadgeDetails).forEach(([badgeName, badgeDetails]) => {
       const linkDefinition = node.children.find(child => `${badgeName}-link` === child.label);
       const imgDefinition = node.children.find(child => `${badgeName}-badge` === child.label);
 
-      assert.equal(linkDefinition.url, badgeDetails.link);
-      assert.equal(linkDefinition.type, 'definition');
-      assert.equal(imgDefinition.url, badgeDetails.img);
-      assert.equal(imgDefinition.type, 'definition');
+      expect(linkDefinition.url).toEqual(badgeDetails.link);
+      expect(linkDefinition.type).toEqual('definition');
+      expect(imgDefinition.url).toEqual(badgeDetails.img);
+      expect(imgDefinition.type).toEqual('definition');
     });
   });
 
-  test('that link references are not added when a link is not included in the badge details', () => {
-    const badgeGroupNames = any.listOf(any.word);
+  it('should not add link references when a link is not included in the badge details', () => {
     const badgeGroups = badgeGroupNames.map(() => any.objectWithKeys(
       any.listOf(any.word),
       {factory: () => ({img: any.url()})}
     ));
-    const zoneMutators = badgeGroupNames.map(() => () => undefined);
     const transformer = plugin(Object.fromEntries(zip(badgeGroupNames, badgeGroups)));
+    const zoneMutators = badgeGroupNames.map(() => () => undefined);
     zip(badgeGroups, zoneMutators).forEach(([group, mutator]) => {
-      zoneMutator.default.withArgs(group).returns(mutator);
+      when(mutateZone).calledWith(group).mockReturnValue(mutator);
     });
     const flattenedBadgeDetails = Object.values(badgeGroups).reduce((acc, badgeGroup) => ({...acc, ...badgeGroup}), {});
 
     transformer(node);
 
-    assert.callCount(zoneMutator.default, badgeGroupNames.length);
+    expect(mutateZone).toHaveBeenCalledTimes(badgeGroupNames.length);
     zip(badgeGroupNames, zoneMutators).forEach(([groupName, mutator]) => {
-      assert.calledWith(zone.default, node, `${groupName}-badges`, mutator);
+      expect(zone).toHaveBeenCalledWith(node, `${groupName}-badges`, mutator);
     });
     Object.entries(flattenedBadgeDetails).forEach(([badgeName, badgeDetails]) => {
       const linkDefinition = node.children.find(child => `${badgeName}-link` === child.label);
       const imgDefinition = node.children.find(child => `${badgeName}-badge` === child.label);
 
-      assert.isUndefined(linkDefinition);
-      assert.equal(imgDefinition.url, badgeDetails.img);
-      assert.equal(imgDefinition.type, 'definition');
+      expect(linkDefinition).toBe(undefined);
+      expect(imgDefinition.url).toEqual(badgeDetails.img);
+      expect(imgDefinition.type).toEqual('definition');
     });
   });
 
-  test('that no injection happens if no badges are provided', () => {
+  it('should not perform injection if no badges are provided', () => {
     const transformer = plugin();
 
     transformer(node);
