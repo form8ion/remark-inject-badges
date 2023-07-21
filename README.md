@@ -42,8 +42,8 @@ $ npm install @form8ion/remark-inject-badges --save-dev
 #### Import
 
 ```javascript
-import fs from 'fs';
-import remark from 'remark';
+import fs from 'node:fs';
+import {remark} from 'remark';
 import injectBadges from '@form8ion/remark-inject-badges';
 ```
 
@@ -76,7 +76,7 @@ remark()
 <!--contribution-badges end -->
 `,
     (err, file) => {
-      fs.writeFileSync(`${process.cwd()}/README.md`, file.contents);
+      fs.writeFileSync(`${process.cwd()}/README.md`, `${file}`);
     }
   );
 ```

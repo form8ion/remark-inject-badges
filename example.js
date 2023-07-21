@@ -1,8 +1,8 @@
 // #### Import
 // remark-usage-ignore-next
 import stubbedFs from 'mock-fs';
-import fs from 'fs';
-import remark from 'remark';
+import fs from 'node:fs';
+import {remark} from 'remark';
 import injectBadges from './lib/index.js';
 
 // remark-usage-ignore-next
@@ -36,7 +36,7 @@ remark()
 <!--contribution-badges end -->
 `,
     (err, file) => {
-      fs.writeFileSync(`${process.cwd()}/README.md`, file.contents);
+      fs.writeFileSync(`${process.cwd()}/README.md`, `${file}`);
     }
   );
 
