@@ -3,26 +3,24 @@ import any from '@travi/any';
 import {when} from 'jest-when';
 
 import mapBadgeToLinkReference from './references/badge-to-reference-mapper.js';
+import filterDuplicateReferences from './references/duplicate-filter.js';
 import mutateZone from './zone-mutator.js';
 
 vi.mock('./references/badge-to-reference-mapper.js');
+vi.mock('./references/duplicate-filter.js');
 
 describe('zone mutator', () => {
   const start = any.simpleObject();
   const end = any.simpleObject();
   const detailsOfBadges = any.simpleObject();
   const detailsOfBadgesEntries = Object.entries(detailsOfBadges);
-  const linkReferences = detailsOfBadgesEntries.map(() => any.simpleObject());
-  const linkReferencesSeparatedByNewLines = linkReferences.reduce(
-    (acc, reference) => acc.concat({type: 'text', value: '\n'}, reference),
-    []
-  );
+  const references = detailsOfBadgesEntries.map(() => any.simpleObject());
 
   beforeEach(() => {
     detailsOfBadgesEntries.forEach((entry, index) => {
       when(mapBadgeToLinkReference)
         .calledWith(entry, index, detailsOfBadgesEntries)
-        .mockReturnValue(linkReferences[index]);
+        .mockReturnValue(references[index]);
     });
   });
 
@@ -31,23 +29,36 @@ describe('zone mutator', () => {
   });
 
   it('should add the badges to the empty zone', () => {
+    const referencesSeparatedByNewLines = references.reduce(
+      (acc, reference) => acc.concat({type: 'text', value: '\n'}, reference),
+      []
+    );
+
     expect(mutateZone(detailsOfBadges)(start, [], end)).toEqual([
       start,
-      {type: 'paragraph', children: linkReferencesSeparatedByNewLines.slice(1)},
+      {type: 'paragraph', children: referencesSeparatedByNewLines.slice(1)},
       end
     ]);
   });
 
   it('should append the badges to the existing list', () => {
-    const existingLinkReferences = detailsOfBadgesEntries.map(() => any.simpleObject());
+    const existingReferences = detailsOfBadgesEntries.map(() => any.simpleObject());
+    const filteredReferences = any.listOf(any.simpleObject);
+    const referencesSeparatedByNewLines = filteredReferences.reduce(
+      (acc, reference) => acc.concat({type: 'text', value: '\n'}, reference),
+      []
+    );
+    when(filterDuplicateReferences)
+      .calledWith(references, existingReferences)
+      .mockReturnValue(filteredReferences);
 
-    expect(mutateZone(detailsOfBadges)(start, [{type: 'paragraph', children: existingLinkReferences}], end)).toEqual([
+    expect(mutateZone(detailsOfBadges)(start, [{type: 'paragraph', children: existingReferences}], end)).toEqual([
       start,
       {
         type: 'paragraph',
         children: [
-          ...existingLinkReferences,
-          ...linkReferencesSeparatedByNewLines
+          ...existingReferences,
+          ...referencesSeparatedByNewLines
         ]
       },
       end
