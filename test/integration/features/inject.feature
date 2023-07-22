@@ -26,3 +26,11 @@ Feature: Inject
     But the provided badges already exist in the document
     When a node is processed
     Then no additional badges were injected
+
+  @wip
+  Scenario: updated details for badge already in the document
+    Given badge zones exist
+    And badges are provided for injection
+    And the provided badge details are updates for existing badges in the document
+    When a node is processed
+    Then the existing badges were updated in the document
