@@ -1,12 +1,12 @@
-import mapBadgeDetailsToLinkReference from './badge-to-link-reference-mapper.js';
+import mapBadgeDetailsToReference from './references/badge-to-reference-mapper.js';
 
 function zoneAlreadyContainsListOfBadges(node) {
   return node && 'paragraph' === node.type;
 }
 
 export default function (detailsOfBadges) {
-  const linkReferences = Object.entries(detailsOfBadges)
-    .map(mapBadgeDetailsToLinkReference)
+  const references = Object.entries(detailsOfBadges)
+    .map(mapBadgeDetailsToReference)
     .reduce((acc, reference) => acc.concat(reference, {type: 'text', value: '\n'}), [])
     .slice(0, -1);
 
@@ -16,8 +16,8 @@ export default function (detailsOfBadges) {
     return [
       start,
       zoneAlreadyContainsListOfBadges(node)
-        ? {...node, children: [...node.children, {type: 'text', value: '\n'}, ...linkReferences]}
-        : {type: 'paragraph', children: linkReferences},
+        ? {...node, children: [...node.children, {type: 'text', value: '\n'}, ...references]}
+        : {type: 'paragraph', children: references},
       end
     ];
   };

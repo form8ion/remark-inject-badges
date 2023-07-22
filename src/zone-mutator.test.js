@@ -2,10 +2,10 @@ import {afterEach, beforeEach, vi, describe, it, expect} from 'vitest';
 import any from '@travi/any';
 import {when} from 'jest-when';
 
-import mapBadgeToLinkReference from './badge-to-link-reference-mapper.js';
+import mapBadgeToLinkReference from './references/badge-to-reference-mapper.js';
 import mutateZone from './zone-mutator.js';
 
-vi.mock('./badge-to-link-reference-mapper.js');
+vi.mock('./references/badge-to-reference-mapper.js');
 
 describe('zone mutator', () => {
   const start = any.simpleObject();
