@@ -19,7 +19,6 @@ Feature: Inject
     When a node is processed
     Then the additional badges were injected
 
-  @wip
   Scenario: badges to inject already exist in document
     Given badge zones exist
     And badges are provided for injection
@@ -27,7 +26,6 @@ Feature: Inject
     When a node is processed
     Then no additional badges were injected
 
-  @wip
   Scenario: updated details for badge already in the document
     Given badge zones exist
     And badges are provided for injection

@@ -52,7 +52,7 @@ describe('plugin', () => {
     });
   });
 
-  it('should not add link references when a link is not included in the badge details', () => {
+  it('should not add link definitions when a link is not included in the badge details', () => {
     const badgeGroups = badgeGroupNames.map(() => any.objectWithKeys(
       any.listOf(any.word),
       {factory: () => ({img: any.url()})}
@@ -78,6 +78,27 @@ describe('plugin', () => {
       expect(imgDefinition.url).toEqual(badgeDetails.img);
       expect(imgDefinition.type).toEqual('definition');
     });
+  });
+
+  it('should update an existing link definition when a matching badge is provided', () => {
+    const badgeGroups = badgeGroupNames.map(() => any.objectWithKeys(
+      any.listOf(any.word),
+      {factory: () => ({link: any.url(), img: any.url()})}
+    ));
+    const transformer = plugin(Object.fromEntries(zip(badgeGroupNames, badgeGroups)));
+    const badge = {link: any.url(), img: any.url()};
+    const badgeName = any.word();
+    badgeGroups[0][badgeName] = badge;
+    node.children.push({type: 'definition', label: `${badgeName}-link`, url: any.url()});
+    node.children.push({type: 'definition', label: `${badgeName}-badge`, url: any.url()});
+
+    transformer(node);
+
+    const linkDefinition = node.children.find(child => `${badgeName}-link` === child.label);
+    const imgDefinition = node.children.find(child => `${badgeName}-badge` === child.label);
+
+    expect(linkDefinition.url).toEqual(badge.link);
+    expect(imgDefinition.url).toEqual(badge.img);
   });
 
   it('should not perform injection if no badges are provided', () => {

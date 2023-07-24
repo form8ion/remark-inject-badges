@@ -82,8 +82,23 @@ ${this.badgeGroupNames.map(groupName => Object.entries(this.badges[groupName]).m
 });
 
 Given('the provided badge details are updates for existing badges in the document', async function () {
-  // Write code here that turns the phrase above into concrete actions
-  return 'pending';
+  this.existingDocumentContent = `# project-name
+
+${this.badgeGroupNames.map(groupName => `
+<!--${groupName}-badges start -->
+${Object.entries(this.badges[groupName])
+    .map(([badgeKey, badge]) => `[![${badge.text}][${badgeKey}-badge]][${badgeKey}-link]
+`)}
+<!--${groupName}-badges end -->
+`).join(EOL)}
+
+${this.badgeGroupNames.map(groupName => Object.entries(this.badges[groupName]).map(([badgeKey]) => `
+
+[${badgeKey}-link]: ${any.url()}
+
+[${badgeKey}-badge]: ${any.url()}
+`).join(EOL))}
+`;
 });
 
 Then('no badges were injected', async function () {
@@ -157,6 +172,20 @@ Then('no additional badges were injected', async function () {
 });
 
 Then('the existing badges were updated in the document', async function () {
-  // Write code here that turns the phrase above into concrete actions
-  return 'pending';
+  const readmeTree = parse(this.resultingContent);
+
+  this.badgeGroupNames.forEach(groupName => {
+    zone(readmeTree, `${groupName}-badges`, (start, nodes) => {
+      const badgesInDocument = nodes[0].children.filter(node => 'linkReference' === node.type);
+      const providedBadges = Object.entries(this.badges[groupName]);
+
+      assert.equal(badgesInDocument.length, providedBadges.length);
+      badgesInDocument.forEach((node, index) => {
+        const badge = providedBadges[index];
+        assert.equal(node.identifier, `${badge[0]}-link`);
+      });
+    });
+  });
+
+  assertBadgeDefinitionsExistExactlyOnceFor(readmeTree, this.badgeGroupNames, this.badges);
 });
