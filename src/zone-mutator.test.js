@@ -64,4 +64,18 @@ describe('zone mutator', () => {
       end
     ]);
   });
+
+  it('should avoid adding an extra newline when all additional badges are duplicates', () => {
+    const existingReferences = detailsOfBadgesEntries.map(() => any.simpleObject());
+    when(filterDuplicateReferences).calledWith(references, existingReferences).mockReturnValue([]);
+
+    expect(mutateZone(detailsOfBadges)(start, [{type: 'paragraph', children: existingReferences}], end)).toEqual([
+      start,
+      {
+        type: 'paragraph',
+        children: existingReferences
+      },
+      end
+    ]);
+  });
 });

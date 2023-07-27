@@ -12,29 +12,42 @@ function injectNewlinesBetweenNodes(acc, reference) {
   });
 }
 
+function injectIntoExistingList(node, references) {
+  const filteredAdditionalReferences = filterDuplicateReferences(references, node.children);
+
+  return {
+    ...node,
+    children: [
+      ...node.children,
+      ...filteredAdditionalReferences.length
+        ? [
+          {type: 'text', value: '\n'},
+          ...filteredAdditionalReferences
+            .reduce(injectNewlinesBetweenNodes, [])
+            .slice(0, -1)
+        ]
+        : []
+    ]
+  };
+}
+
+function injectIntoNewList(references) {
+  return {
+    type: 'paragraph',
+    children: references
+      .reduce(injectNewlinesBetweenNodes, [])
+      .slice(0, -1)
+  };
+}
+
 export default function (detailsOfBadges) {
-  const references = Object.entries(detailsOfBadges)
-    .map(mapBadgeDetailsToReference);
+  const references = Object.entries(detailsOfBadges).map(mapBadgeDetailsToReference);
 
   return (start, [node], end) => ([
     start,
     zoneAlreadyContainsListOfBadges(node)
-      ? {
-        ...node,
-        children: [
-          ...node.children,
-          {type: 'text', value: '\n'},
-          ...filterDuplicateReferences(references, node.children)
-            .reduce(injectNewlinesBetweenNodes, [])
-            .slice(0, -1)
-        ]
-      }
-      : {
-        type: 'paragraph',
-        children: references
-          .reduce(injectNewlinesBetweenNodes, [])
-          .slice(0, -1)
-      },
+      ? injectIntoExistingList(node, references)
+      : injectIntoNewList(references),
     end
   ]);
 }
