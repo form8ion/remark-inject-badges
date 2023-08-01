@@ -1,6 +1,7 @@
 // #### Import
-// remark-usage-ignore-next
+// remark-usage-ignore-next 2
 import stubbedFs from 'mock-fs';
+// eslint-disable-next-line import/order
 import fs from 'node:fs';
 import {remark} from 'remark';
 import injectBadges from './lib/index.js';
