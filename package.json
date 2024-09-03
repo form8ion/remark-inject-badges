@@ -57,7 +57,7 @@
     "mdast-zone": "^6.0.1"
   },
   "devDependencies": {
-    "@cucumber/cucumber": "9.6.0",
+    "@cucumber/cucumber": "10.9.0",
     "@form8ion/commitlint-config": "1.0.76",
     "@form8ion/eslint-config": "7.0.10",
     "@form8ion/eslint-config-cucumber": "1.4.1",
