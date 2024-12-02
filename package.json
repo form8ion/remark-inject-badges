@@ -88,6 +88,6 @@
     "rollup": "4.28.0",
     "rollup-plugin-auto-external": "2.0.0",
     "unist-util-find-all-after": "5.0.0",
-    "vitest": "2.1.6"
+    "vitest": "2.1.7"
   }
 }
