@@ -77,7 +77,7 @@
     "ls-engines": "0.9.3",
     "mdast-util-assert": "5.0.0",
     "mdast-util-from-markdown": "2.0.2",
-    "mock-fs": "5.4.1",
+    "mock-fs": "5.5.0",
     "npm-run-all2": "7.0.2",
     "publint": "0.2.12",
     "remark": "15.0.1",
