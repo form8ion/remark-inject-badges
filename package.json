@@ -76,7 +76,7 @@
     "lodash.zip": "4.2.0",
     "ls-engines": "0.9.4",
     "mdast-util-assert": "5.0.0",
-    "mdast-util-from-markdown": "2.0.2",
+    "mdast-util-from-markdown": "2.0.3",
     "mock-fs": "5.5.0",
     "npm-run-all2": "8.0.4",
     "publint": "0.2.12",
